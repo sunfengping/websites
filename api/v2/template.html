@@ -1,0 +1,86 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>Error <?php echo $this->error; ?> | <?php echo self::$codes[$this->error]; ?></title>
+<style type="text/css">
+<!--
+body,html {
+margin:0;
+padding:30px 20px 20px;
+}
+
+#error {
+border:20px solid #1B1B1B;
+border-radius:240px 240px 240px 240px;
+height:240px;
+text-align:center;
+transition:all .8s ease 0;
+width:240px;
+margin:0 auto 40px;
+font-family:verdana;
+}
+
+#error:hover {
+border-color:red;
+}
+
+#error span {
+color:#FA4C29;
+font-size:100px;
+font-weight:700;
+line-height:240px;
+}
+
+.large-heading {
+font-size:48px;
+line-height:1.2em;
+-webkit-animation-name: blinker;  
+-webkit-animation-iteration-count: infinite;  
+-webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+-webkit-animation-duration: 1s;
+}
+
+.light-heading {
+font-weight:400;
+}
+
+.status-msg-bg {
+background-color:transparent;
+}
+
+.sidebar-wrapper,.page-header {
+display:none;
+}
+
+.main-wrapper {
+margin-right:0;
+}
+
+.outer-wrapper {
+min-height:0;
+}
+
+.status-msg-border {
+border:0 none;
+}
+
+@-webkit-keyframes blinker {  
+from { opacity: 1.0; }
+to { opacity: 0.7; }
+}	
+-->
+</style>    
+</head>
+
+<!-- body -->
+<body>
+    <div id="error">
+        <span><?php echo $this->error; ?></span>
+    </div>
+    <h1 class="large-heading" style="text-align: center;"><?php echo self::$codes[$this->error]; ?></h1>
+    <h2 class="light-heading" style="text-align: center;">Please check that there isn&#8217;t a typo in your URL.</h2>
+</body><!-- end body -->
+</html>
+
+ 
