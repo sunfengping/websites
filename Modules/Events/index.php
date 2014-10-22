@@ -1,16 +1,13 @@
 <?php include ($_SERVER ['DOCUMENT_ROOT'] . "/header.php"); ?>
 <?php 
-
 	use \Curl\Curl;
 	$curl = new Curl();
 	$curl->setHeader ( 'API-KEY', $_SESSION ['token'] );
-	
 	if(!$_GET["page"])
 	{
 		$_GET["page"]=1;
 	}
-	
-	$curl->get(REST_ENDPOINT.'News', array(
+	$curl->get(REST_ENDPOINT.'Events', array(
 		'churchId' => $_SESSION ["church_id"] ,
 		'page'=>$_GET["page"],
 	));
@@ -23,6 +20,10 @@
 		$page=$result[1];
 	  }
 	$page_url='/Modules/News/?'.$_SERVER['QUERY_STRING'];
+	
+	//$ceshi_url="ceshi/?admin=0&page=0";
+	//$ceshi_url="ceshi/?page=0";
+	
 	$page_url=preg_replace("/(^|&)page=[0-9]$/","",$ceshi_url);
 	$page_url=preg_replace("/(^|)page=[0-9]$/","",$ceshi_url);
 	if(strrpos ($page_url , "?" )>0)
@@ -40,15 +41,16 @@
 	{
 	  $page_url.="?page=";
 	}
+	
 ?> 
 <!-- Sub Banner -->      
 <section class="sub-banner newsection">
     <div class="container">
-        <h2 class="title">News Left Sidebar</h2>
+        <h2 class="title">Event Left Sidebar</h2>
         <ul class="breadcrumb">
             <li><a href="#">Home</a></li>
-            <li><a href="#">News</a></li>
-            <li>News Left Sidebar</li>
+            <li><a href="#">Events</a></li>
+            <li>Event Left Sidebar</li>
         </ul>
     </div>
 </section>
@@ -101,18 +103,29 @@
 					 foreach ($newsList as $news)
 					 {
 					?>
-                        <div class="event-border col-md-4">
+                        <div class="event-border col-md-4" >
                             <div class="event clearfix">
-                                <div class="eventsimg">
-                                   <img src="<?php echo $news->image_url; ?>" alt="">
+                                <div class="eventsimg" >
+                                  <?php 
+								    if(isset($news->image_url)&&$news->image_url!="")
+									{
+								  ?>
+                                   <img src="<?php echo $news->image_url; ?>" alt="" width="515px" height="250px" >
+                                   <?php 
+									} else {
+								   ?>
+                                   <img src="/Content/img/515x390.gif" width="515" height="250" alt="">
+                                   <?php 
+									}
+								   ?>
                                 </div>
                                 <div class="event-content">
-                                    <h3 class="title"><a href="/Modules/News/details/?id=<?php echo $news->id; ?>"><?php echo $news->title; ?> </a></h3>
+                                    <h3 class="title" style="height:100px;"><a href="/Modules/Events/details/?id=<?php echo $news->Id; ?>"><?php echo $news->Subject; ?> </a></h3>
                                     <ul class="meta">
                                         <li class="date"><i class="icon fa fa-calendar"></i> Feb 17-19, 2014</li><li><a href="#"><i class="icon fa fa-home"></i> Grand Hotel Califonria</a></li><li><a href="#"><i class="icon fa fa-map-marker"></i>Istanbul / Turkey</a></li>
                                     </ul>
                                   <div style="width:100%; height:120px; overflow:hidden;">
-                                      <?php echo  substr($news->msg,0,210); ?>[...]
+                                      <?php echo  substr($news->Description,0,210); ?>[...]
                                   </div>
                                   
                                    
@@ -132,7 +145,7 @@
 					         }
                         ?>
                        
-
+						
                        
 
                        
@@ -143,7 +156,7 @@
                 <div style="clear:both; height:10px; width:100%;"></div>
                 <!-- pagination -->
                 <ul class="pagination clearfix">
-                     <?php 
+                    <?php 
 					  if($page->prepg) echo '<li class=""><a href="'.$page_url.$page->prepg.'"><i class="fa fa-angle-left"></i></a></li> ';
 					  
 					  for($i=1;$i<=$page->lastpg;$i++){
@@ -154,6 +167,7 @@
                    	  if($page->nextpg) echo '<li class=""><a href="'.$page_url.$page->nextpg.'"><i class="fa fa-angle-right"></i></a></li>';
 					
 					?>
+                    
                 </ul>
 
             </div> 
